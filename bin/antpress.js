@@ -1,66 +1,47 @@
 #!/usr/bin/env node
 
-'use strict';
-
 const path = require('path');
-const program = require('commander');
-const pkgInfo = require('../package.json');
-
-const dev = require('../lib/dev');
-const bulid = require('../lib/build');
-const config = require('../lib/config');
-const render = require('../lib/render');
 const workspace = process.cwd();
 
-program
-  .version(pkgInfo.version)
-  .description(pkgInfo.description)
-  .parse(process.argv);
+process.env.ANTPRESS_WORKSPACE = workspace;
+process.chdir(path.resolve(__dirname, '..'));
 
-program
-  .command('build')
-  .description('build site')
-  .action(async () => {
-    const data = await config.load(workspace);
+require('babel-register')({
+  ignore: [/(node_modules)/],
+  presets: ['env', 'react-app'],
+  plugins: [
+    'dynamic-import-node',
+    [
+      'css-modules-transform',
+      {
+        generateScopedName: '[name]__[local]___[hash:base64:5]',
+        extensions: ['.css', '.less'],
+      },
+    ],
+    [
+      'transform-assets',
+      {
+        extensions: ['svg'],
+        name: '/static/media/[name].[hash:8].[ext]',
+      },
+    ],
+    'transform-decorators-legacy',
+    [
+      'babel-plugin-root-import',
+      {
+        rootPathSuffix: 'theme',
+      },
+    ],
+    [
+      'import',
+      {
+        libraryName: 'antd',
+      },
+    ],
+  ],
+});
 
-    process.env.ANTPRESS_WORKSPACE = workspace;
-    process.env.REACT_APP_ANTPRESS = JSON.stringify(data);
+process.env.NODE_ENV = 'production';
+process.env.BABEL_ENV = 'production'
 
-    process.chdir(path.resolve(__dirname, '..'));
-
-    // build template
-    await bulid.run();
-
-  });
-
-program
-  .command('render')
-  .description('render')
-  .action(async () => {
-    process.env.BABEL_ENV = 'production';
-    process.env.NODE_ENV = 'production';
-
-    const data = await config.load(workspace);
-
-    process.env.ANTPRESS_WORKSPACE = workspace;
-    process.env.REACT_APP_ANTPRESS = JSON.stringify(data);
-
-    process.chdir(path.resolve(__dirname, '..'));
-    render.run();
-  });
-
-program
-  .command('dev')
-  .description('dev')
-  .action(async () => {
-    const data = await config.load(workspace);
-
-    process.env.REACT_APP_ANTPRESS = JSON.stringify(data);
-
-    process.chdir(path.resolve(__dirname, '..'));
-    dev.run();
-  });
-
-program.parse(process.argv);
-
-if (!program.args.length) program.help();
+require('../lib/antpress');
