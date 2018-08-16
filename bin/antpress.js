@@ -3,11 +3,18 @@
 const path = require('path');
 const workspace = process.cwd();
 
+// env
 process.env.ANTPRESS_WORKSPACE = workspace;
+process.env.NODE_ENV = 'production';
+process.env.BABEL_ENV = 'production';
+
+// chdir to load res
 process.chdir(path.resolve(__dirname, '..'));
 
-require('babel-register')({
+require('babel-register')({  
+  // Development: ignore node_modules  
   // ignore: [/(node_modules)/],
+
   ignore: function(filename) {
     return filename.indexOf('antpress') === -1;
   },
@@ -44,7 +51,5 @@ require('babel-register')({
   ],
 });
 
-process.env.NODE_ENV = 'production';
-process.env.BABEL_ENV = 'production';
 
 require('../lib/antpress');
