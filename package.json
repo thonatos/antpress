@@ -72,9 +72,7 @@
     "antpress": "./bin/antpress.js"
   },
   "scripts": {
-    "dev": "node scripts/start.js",
-    "build": "node scripts/build.js",
-    "render": "NODE_ENV=production node render/bootstrap.js"
+    "version": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0 && git add CHANGELOG.md"
   },
   "eslintConfig": {
     "extends": "react-app"
