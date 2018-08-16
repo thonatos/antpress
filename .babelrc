@@ -1,0 +1,21 @@
+{
+  "presets": [
+    "env",
+    "react-app"
+  ],
+  "plugins": [
+    "transform-decorators-legacy",
+    [
+      "babel-plugin-root-import",
+      {
+        "rootPathSuffix": "theme"
+      }
+    ],
+    [
+      "import",
+      {
+        "libraryName": "antd"
+      }
+    ]
+  ]
+}
