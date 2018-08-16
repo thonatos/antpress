@@ -1,6 +1,14 @@
-# Antpress
+# Antpress &middot; [![GitHub license][license-square]][license-url]
 
 Minimalistic React-powered static site generator.
+
+[![NPM version][npm-image]][npm-url]
+ 
+[npm-image]: https://img.shields.io/npm/v/antpress.svg?style=flat-square
+[npm-url]: https://npmjs.org/package/antpress
+
+[license-square]: https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square
+[license-url]: https://github.com/thonatos/antpress/blob/master/LICENSE
 
 ## Demo
 
@@ -17,17 +25,33 @@ npm install antpress
 - build 
 
 ```bash
-npx antpress bulild
+npx antpress build
 npx antpress render
 ```
 
 - example
 
 ```bash
-https://github.com/thonatos/antpress-egg
+
+# download example
+git clone https://github.com/thonatos/antpress-egg
+cd antpress-egg
+
+# install antpress
+yarn add antpress
+
+# build template
+npx antpress build
+
+# render docs
+npx antpress render
 ```
 
 ## TODO
 
 - [ ] theme
 - [ ] layout
+
+## License
+
+[MIT](LICENSE)
