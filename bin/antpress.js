@@ -7,7 +7,10 @@ process.env.ANTPRESS_WORKSPACE = workspace;
 process.chdir(path.resolve(__dirname, '..'));
 
 require('babel-register')({
-  ignore: [/(node_modules)/],
+  // ignore: [/(node_modules)/],
+  ignore: function(filename) {
+    return filename.indexOf('antpress') === -1;
+  },
   presets: ['env', 'react-app'],
   plugins: [
     'dynamic-import-node',
@@ -42,6 +45,6 @@ require('babel-register')({
 });
 
 process.env.NODE_ENV = 'production';
-process.env.BABEL_ENV = 'production'
+process.env.BABEL_ENV = 'production';
 
 require('../lib/antpress');
