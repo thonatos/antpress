@@ -2,7 +2,7 @@
   "name": "antpress",
   "version": "0.1.1-2",
   "description": "Minimalistic React-powered static site generator",
-  "homepage": "https://github.com/thonatos/antpress",
+  "homepage": "/",
   "scripts": {
     "version": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0 && git add CHANGELOG.md"
   },

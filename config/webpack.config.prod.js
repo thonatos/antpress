@@ -13,6 +13,7 @@ const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const paths = require('./paths');
 const getClientEnvironment = require('./env');
 
+const theme = require('./theme');
 const entries = {};
 const htmls = [];
 
@@ -180,7 +181,16 @@ module.exports = {
             include: paths.appSrc,
             loader: require.resolve('babel-loader'),
             options: {
-              plugins: [['import', { libraryName: 'antd', style: 'css' }]],
+              plugins: [
+                [
+                  'import',
+                  {
+                    libraryName: 'antd',
+                    libraryDirectory: 'es',
+                    style: true,
+                  },
+                ],
+              ],
               compact: true,
             },
           },
@@ -287,6 +297,10 @@ module.exports = {
                     },
                     {
                       loader: require.resolve('less-loader'), // compiles Less to CSS
+                      options: {
+                        modifyVars: theme,
+                        javascriptEnabled: true,
+                      },
                     },
                   ],
                 },
