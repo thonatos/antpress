@@ -1,4 +1,12 @@
 export const getRedirectUrl = pathname => {
+  if (pathname === '/') {
+    return '/zh-cn/';
+  }
+
+  if (pathname === '/zh-cn/') {
+    return '/';
+  }
+
   if (pathname.startsWith('/zh-cn')) {
     return pathname.replace('/zh-cn', '/en');
   }
